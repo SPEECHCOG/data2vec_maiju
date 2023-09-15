@@ -17,7 +17,7 @@ import torch.nn.functional as F
 
 from importlib.machinery import SourceFileLoader
 from copy import deepcopy
-from torch import cuda, no_grad, save, load, stack, from_numpy, cat
+from torch import cuda, no_grad, save, load, stack
 from torch.utils.data import DataLoader
 
 from py_conf_file_into_text import convert_py_conf_file_to_text
@@ -287,10 +287,6 @@ if __name__ == '__main__':
                 data_masks = stack(data_masks, dim=0)
                 padding_masks = data_masks.bool()
                 
-                # We add one additional padding value due to the CLS token
-                if conf.include_cls_token:
-                    padding_masks = cat((from_numpy(np.array([False])).repeat(X_input.size()[0], 1).to(X_input.device), padding_masks), dim=1)
-                
                 # Zero the gradient of the optimizer
                 optimizer.zero_grad()
                 
@@ -407,8 +403,6 @@ if __name__ == '__main__':
                     X_input = stack(X_input, dim=0)
                     data_masks = stack(data_masks, dim=0)
                     padding_masks = data_masks.bool()
-                    if conf.include_cls_token:
-                        padding_masks = cat((from_numpy(np.array([False])).repeat(X_input.size()[0], 1).to(X_input.device), padding_masks), dim=1)
                     Embedding = []
                     for i in range(len(X_input)):
                         seq_embedding = Encoder_student(X_input[i].float())
@@ -590,8 +584,6 @@ if __name__ == '__main__':
             for test_data in test_data_loader:
                 X_input, data_masks = [element.to(device) for element in test_data]
                 padding_masks = data_masks.bool()
-                if conf.include_cls_token:
-                    padding_masks = cat((from_numpy(np.array([False])).repeat(X_input.size()[0], 1).to(X_input.device), padding_masks), dim=1)
                 Embedding = []
                 for i in range(len(X_input)):
                     seq_embedding = Encoder_student(X_input[i].float())
@@ -601,7 +593,6 @@ if __name__ == '__main__':
                 if conf.include_cls_token:
                     CLS_token_outputs.append(X_output[:, 0, :].cpu().numpy())
                     X_output = X_output[:, 1:, :]
-                    padding_masks = padding_masks[:, 1:]
                 X_outputs_array.append(X_output.cpu().numpy())
                 padding_mask_indices_array.append(padding_masks.cpu().numpy())
         

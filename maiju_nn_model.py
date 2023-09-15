@@ -634,6 +634,7 @@ class data2vec_transformer_encoder(Module):
         # Add the CLS token to the beginning of the sequence (and also to the beginning of the embedding masks, if necessary)
         if self.include_cls_token:
             src = torch.cat((self.cls_token.repeat(src.size()[0], 1).unsqueeze(1).to(src.device), src), dim=1)
+            src_key_padding_mask = torch.cat((torch.from_numpy(np.array([False])).repeat(src.size()[0], 1).to(src.device), src_key_padding_mask), dim=1)
             if self.use_embedding_mask:
                 indices_embedding_masks = np.concatenate((np.expand_dims(np.repeat(False, src.size()[0]), axis=1), indices_embedding_masks), axis=1)
         

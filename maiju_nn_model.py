@@ -403,7 +403,10 @@ class data2vec_transformer_finetuning(Module):
     def forward(self, src, src_key_padding_mask=None):
         
         if self.only_attend_to_previous_context:
-            src_mask = self.create_src_square_mask(src.size()[1]).to(src.device)
+            if self.include_cls_token:
+                src_mask = self.create_src_square_mask(src.size()[1] + 1).to(src.device)
+            else:
+                src_mask = self.create_src_square_mask(src.size()[1]).to(src.device)
         else:
             src_mask = None
         
@@ -602,7 +605,10 @@ class data2vec_transformer_encoder(Module):
     def forward(self, src, src_key_padding_mask=None):
         
         if self.only_attend_to_previous_context:
-            src_mask = self.create_src_square_mask(src.size()[1]).to(src.device)
+            if self.include_cls_token:
+                src_mask = self.create_src_square_mask(src.size()[1] + 1).to(src.device)
+            else:
+                src_mask = self.create_src_square_mask(src.size()[1]).to(src.device)
         else:
             src_mask = None
         

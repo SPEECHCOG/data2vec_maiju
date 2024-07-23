@@ -3,9 +3,9 @@
 This repository contains code for pre-training models using the [data2vec algorithm](https://proceedings.mlr.press/v162/baevski22a/baevski22a.pdf) for MAIJU smart jumpsuit data, and also code for fine-tuning the pre-trained models using labeled data. The code has been implemented using PyTorch. For a thorough description of the MAIJU smart jumpsuit, see e.g. https://www.nature.com/articles/s43856-022-00131-6.
 
 **The present data2vec implementation has been used in the following publication:**
-[E. Vaaras, M. Airaksinen, S. Vanhatalo, and O. Räsänen, "Evaluation of self-supervised pre-training for automatic infant movement classification using wearable movement sensors," in _Proc. IEEE EMBC 2023_](https://arxiv.org/abs/2305.09366).
+[E. Vaaras, M. Airaksinen, S. Vanhatalo, and O. Räsänen, "Evaluation of self-supervised pre-training for automatic infant movement classification using wearable movement sensors," in _Proc. IEEE EMBC 2023_](https://ieeexplore.ieee.org/document/10340118).
 
-If you use the present code or its derivatives, please cite the [repository URL](https://github.com/SPEECHCOG/data2vec_maiju) and/or the [aforementioned publication](https://arxiv.org/abs/2305.09366).
+If you use the present code or its derivatives, please cite the [repository URL](https://github.com/SPEECHCOG/data2vec_maiju) and/or the [aforementioned publication](https://ieeexplore.ieee.org/document/10340118).
 
 ## Requirements
 Any `PyTorch` version newer than version 1.9.0 should work fine. You can find out how to install PyTorch here: https://pytorch.org/get-started/locally/. You also need to have `Numpy` and `scikit-learn` installed.
